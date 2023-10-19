@@ -1,65 +1,26 @@
 {
   "project_info": {
-    "project_number": "1062346351483",
-    "project_id": "calcunote-ab5de",
-    "storage_bucket": "calcunote-ab5de.appspot.com"
+    "project_number": "135418762533",
+    "project_id": "parkeasy-d6323",
+    "storage_bucket": "parkeasy-d6323.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1062346351483:android:11429f349ea3f2f2b693de",
+        "mobilesdk_app_id": "1:135418762533:android:332d14286b074037d576cc",
         "android_client_info": {
-          "package_name": "com.juanpablo061207.calcunote"
+          "package_name": "com.parkeasy.android"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "1062346351483-72gm0a17l7kjrofmlm0h379iu2k0n6o2.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBKbzPuhO3FaJLgAHQ1Z3PEOIw3trlTAV4"
+          "current_key": "AIzaSyANS_TQSAqKCkIQFh7_zMTOZhC65xoHvkE"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1062346351483-72gm0a17l7kjrofmlm0h379iu2k0n6o2.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1062346351483:android:f9f9e73641ac6754b693de",
-        "android_client_info": {
-          "package_name": "com.juanpablo061207.parkingreservation"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1062346351483-72gm0a17l7kjrofmlm0h379iu2k0n6o2.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBKbzPuhO3FaJLgAHQ1Z3PEOIw3trlTAV4"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1062346351483-72gm0a17l7kjrofmlm0h379iu2k0n6o2.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

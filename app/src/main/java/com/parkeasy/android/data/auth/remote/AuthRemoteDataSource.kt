@@ -10,14 +10,14 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class AuthRemoteDataSource @Inject constructor(private val auth: FirebaseAuth, @ApplicationContext private val context: Context) {
-    private val googleSignInClient by lazy {
+    /*private val googleSignInClient by lazy {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(context.getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 
         GoogleSignIn.getClient(context, gso)
-    }
+    }*/
 
     suspend fun register(email: String, password: String): String {
         val authResult = auth.createUserWithEmailAndPassword(email, password).await()
