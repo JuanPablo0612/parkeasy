@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "1062346351483",
+    "project_id": "calcunote-ab5de",
+    "storage_bucket": "calcunote-ab5de.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1062346351483:android:11429f349ea3f2f2b693de",
+        "android_client_info": {
+          "package_name": "com.juanpablo061207.calcunote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1062346351483-72gm0a17l7kjrofmlm0h379iu2k0n6o2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKbzPuhO3FaJLgAHQ1Z3PEOIw3trlTAV4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1062346351483-72gm0a17l7kjrofmlm0h379iu2k0n6o2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1062346351483:android:f9f9e73641ac6754b693de",
+        "android_client_info": {
+          "package_name": "com.juanpablo061207.parkingreservation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1062346351483-72gm0a17l7kjrofmlm0h379iu2k0n6o2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKbzPuhO3FaJLgAHQ1Z3PEOIw3trlTAV4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1062346351483-72gm0a17l7kjrofmlm0h379iu2k0n6o2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

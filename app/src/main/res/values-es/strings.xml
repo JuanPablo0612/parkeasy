@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Resources for the welcome screen -->
+    <string name="welcome_title">¡Bienvenido!</string>
+    <string name="welcome_subtitle">Inicia sesión o regístrate para usar Parking Reservation.</string>
+    <string name="welcome_login_button">Iniciar sesión</string>
+    <string name="welcome_register_button">Registrarse</string>
+
+    <!-- Recursos para la pantalla de inicio de sesión -->
+    <string name="login_title">Iniciar sesión</string>
+    <string name="login_subtitle">Inicia sesión para acceder a todas las funciones y beneficios de Parking Reservation</string>
+    <string name="login_email_field">Correo electrónico:</string>
+    <string name="login_email_error">El correo electrónico no es válido</string>
+    <string name="login_password_field">Contraseña:</string>
+    <string name="login_password_error">La contraseña debe tener entre 8 y 16 caracteres</string>
+    <string name="login_button">Iniciar sesión</string>
+    <string name="login_forgot_password_option">¿Olvidaste tu contraseña? Recupérala aquí</string>
+    <string name="login_register_option">¿No tienes una cuenta? Regístrate gratis</string>
+    <string name="login_social_option">O inicia sesión con:</string>
+
+    <!-- Recursos para la pantalla de registro -->
+    <string name="register_title">Regístrarse</string>
+    <string name="register_subtitle">Crea una cuenta gratis y empieza a disfrutar de Parking Reservation</string>
+    <string name="register_email_field">Correo electrónico:</string>
+    <string name="register_email_error">El correo electrónico no es válido</string>
+    <string name="register_password_field">Contraseña:</string>
+    <string name="register_password_error">La contraseña debe tener entre 8 y 16 caracteres</string>
+    <string name="register_confirm_password_field">Confirma tu contraseña:</string>
+    <string name="register_confirm_password_error">Las contraseñas no coinciden</string>
+    <string name="register_first_name_field">Nombre:</string>
+    <string name="register_first_name_error">El nombre no debe estar vacio</string>
+    <string name="register_last_name_field">Apellido:</string>
+    <string name="register_last_name_error">El apellido no debe estar vacio</string>
+    <string name="register_residence_country_menu">País de residencia:</string>
+    <string name="register_residence_country_error">El país de residencia no debe estar vacio</string>
+    <string name="register_button">Registrarse</string>
+    <string name="register_terms_option">Al registrarte, aceptas nuestros términos y condiciones</string>
+    <string name="register_login_option">¿Ya tienes una cuenta? Inicia sesión aquí</string>
+    <string name="register_social_option">O regístrate con:</string>
+
+    <!-- Recursos para la pantalla de estacionamientos -->
+    <string name="parking_lots_title">Estacionamientos disponibles</string>
+    <string name="parking_lots_parking_spaces">Número de estacionamientos: %1$d</string>
+    <string name="parking_lots_reserve_button">Reservar</string>
+
+    <!-- Recursos para la pantalla de lugares para estacionar -->
+    <string name="parking_spaces_title">Reservar</string>
+    <string name="parking_spaces_number">Número de lugares de estacionamiento: %1$d</string>
+    <string name="parking_spaces_reserve_button">Reservar</string>
+    <string name="parking_spaces_reserve_edit_button">Editar reserva</string>
+    <string name="parking_spaces_reserve_cancel_button">Cancelar reserva</string>
+
+    <!-- Recursos para la pantalla de reserva -->
+    <string name="reservation_title">Reservar en %1$s</string>
+    <string name="reservation_made_by_user_text">Hecha por:</string>
+    <string name="reservation_parking_space_number">Número de lugar de estacionamiento:</string>
+    <string name="reservation_select_dates_text">Selecciona la fecha de inicio y finalización de la reserva</string>
+    <string name="reservation_start_date">Fecha de inicio:</string>
+    <string name="reservation_end_date">Fecha de finalización:</string>
+    <string name="reservation_start_time">Hora de inicio:</string>
+    <string name="reservation_end_hour">Hora de finalización:</string>
+    <string name="reservation_check_availability_button">Comprobar disponibilidad</string>
+    <string name="reservation_confirm_dialog_title">¿Confirmar reserva?</string>
+    <string name="reservation_confirm_dialog_details">Detalles:</string>
+    <string name="reservation_confirm_dialog_parking_lot">Estacionamiento:</string>
+    <string name="reservation_confirm_dialog_reserve_button">Reservar</string>
+
+    <!-- Recursos para la pantalla principal -->
+    <string name="main_select_city">Selecciona la ciudad de destino</string>
+    <string name="main_permissions_location">Para utilizar esta aplicación, primero debes darnos permiso para acceder a tu ubicación.</string>
+    <string name="main_tab_map">Mapa</string>
+    <string name="main_tab_home">Inicio</string>
+    <string name="main_tab_list">Lista</string>
+    <string name="main_tab_account">Cuenta</string>
+
+    <!-- Recursos para la pantalla de inicio -->
+    <string name="home_user_reservations">Reservas</string>
+    <string name="home_user_reservations_parking_lots_first_text">Has reservado en:</string>
+    <string name="home_user_reservations_parking_lots_last_text">estacionamientos</string>
+
+    <!-- Resources for the parkings map screen -->
+    <string name="parking_lots_map_title">¡Bienvenido!, %1$s</string>
+
+    <!-- Recursos para la pantalla de cuenta -->
+    <string name="account_title">Tu cuenta</string>
+    <string name="account_residence_country">País de residencia: %1$s</string>
+    <string name="account_logout">Cerrar sesión</string>
+    <string name="account_logout_text">¿Estás seguro de que quieres cerrar sesión?</string>
+
+    <!-- Recursos comunes -->
+    <string name="common_grant_permission">Conceder permiso</string>
+    <string name="common_confirm">Confirmar</string>
+    <string name="common_cancel">Cancelar</string>
+
+    <!-- Recursos de errores -->
+    <string name="error_wrong_password">La contraseña es incorrecta</string>
+    <string name="error_user_does_not_exist">El usuario no existe</string>
+    <string name="error_user_already_exists">El usuario ya existe</string>
+    <string name="error_unknown">Error desconocido</string>
+</resources>
