@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -56,12 +55,60 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.parkeasy.android.R
 import com.parkeasy.android.ui.navigation.Screen
 
+/**
+ * This is a Composable function called "RegisterScreen" that is used to display a
+ * registration screen in a Jetpack Compose UI. It takes two parameters:
+ * "viewModel" of type RegisterViewModel and "navController" of type
+ * NavController.
+ *
+ * The function is annotated with "@OptIn(ExperimentalMaterial3Api::class)" which
+ * indicates that it uses experimental Material3 components.
+ *
+ * Inside the function, the "uiState" is obtained from the "viewModel" to observe
+ * the state of the registration process. The "scrollBehavior" and "focusManager"
+ * are also obtained from their respective providers.
+ *
+ * A "LaunchedEffect" is used to navigate to the main screen when the registration
+ * is successful. It listens to changes in the "uiState.isSuccess" property and
+ * navigates to the main screen using the "navController" when it becomes true.
+ *
+ * The UI of the registration screen is built using the "Scaffold" composable. It
+ * consists of a "LargeTopAppBar" at the top, followed by a "Box" that contains
+ * the registration form.
+ *
+ * The registration form is built using a "Column" composable. It contains several
+ * "OutlinedTextField" composables for input fields such as email, password,
+ * repeat password, first name, and last name. Each input field has its own
+ * validation logic and error messages.
+ *
+ * A "TextButton" is used to show a dropdown menu for selecting the residence
+ * country. The selected country is displayed as the button text, and the dropdown
+ * menu is shown when the button is clicked.
+ *
+ * A "Button" is used to trigger the registration process. It is enabled only when
+ * all the input fields are valid. When clicked, it calls the "onRegister"
+ * function of the view model.
+ *
+ * A "TextButton" is used to navigate to the login screen. It checks the previous
+ * destination in the navigation stack and navigates accordingly.
+ *
+ * Below the registration form, there is a section for social login options.
+ * Currently, only a Google login option is displayed as an "OutlinedCard" with
+ * the Google logo and text.
+ *
+ * If there is an error during the registration process, an "AlertDialog" is shown
+ * with the error message. It can be dismissed by clicking the "OK" button.
+ *
+ * Overall, this function creates a registration screen UI with input fields,
+ * validation logic, navigation, and error handling.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(viewModel: RegisterViewModel = hiltViewModel(), navController: NavController) {
@@ -91,9 +138,7 @@ fun RegisterScreen(viewModel: RegisterViewModel = hiltViewModel(), navController
                 scrollBehavior = scrollBehavior,
             )
         },
-        modifier = Modifier
-            .padding(horizontal = 10.dp)
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
     ) { padding ->
         Box(
             modifier = Modifier
@@ -103,8 +148,8 @@ fun RegisterScreen(viewModel: RegisterViewModel = hiltViewModel(), navController
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-                    .fillMaxWidth(0.9f)
-                    .fillMaxHeight()
+                    .fillMaxWidth()
+                    .padding(10.dp)
                     .verticalScroll(state = rememberScrollState())
             ) {
                 Text(
@@ -139,7 +184,7 @@ fun RegisterScreen(viewModel: RegisterViewModel = hiltViewModel(), navController
                     keyboardActions = KeyboardActions(onNext = {
                         focusManager.moveFocus(FocusDirection.Next)
                     }),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(0.9f)
                 )
 
                 Spacer(modifier = Modifier.height(5.dp))
@@ -177,7 +222,7 @@ fun RegisterScreen(viewModel: RegisterViewModel = hiltViewModel(), navController
                     keyboardActions = KeyboardActions(onNext = {
                         focusManager.moveFocus(FocusDirection.Next)
                     }),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(0.9f)
                 )
 
                 Spacer(modifier = Modifier.height(5.dp))
@@ -207,7 +252,7 @@ fun RegisterScreen(viewModel: RegisterViewModel = hiltViewModel(), navController
                     keyboardActions = KeyboardActions(onNext = {
                         focusManager.moveFocus(FocusDirection.Next)
                     }),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(0.9f)
                 )
 
                 Spacer(modifier = Modifier.height(5.dp))
@@ -236,7 +281,7 @@ fun RegisterScreen(viewModel: RegisterViewModel = hiltViewModel(), navController
                     keyboardActions = KeyboardActions(onNext = {
                         focusManager.moveFocus(FocusDirection.Next)
                     }),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(0.9f)
                 )
 
                 Spacer(modifier = Modifier.height(5.dp))
@@ -265,7 +310,7 @@ fun RegisterScreen(viewModel: RegisterViewModel = hiltViewModel(), navController
                     keyboardActions = KeyboardActions(onNext = {
                         focusManager.moveFocus(FocusDirection.Next)
                     }),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(0.9f)
                 )
 
                 Spacer(modifier = Modifier.height(5.dp))
@@ -301,18 +346,21 @@ fun RegisterScreen(viewModel: RegisterViewModel = hiltViewModel(), navController
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                val allFieldsValid =
+                val enableButton =
                     uiState.isValidEmail && uiState.isValidPassword && uiState.isValidRepeatPassword && uiState.isValidFirstName && uiState.isValidLastName && uiState.selectedResidenceCountry != null
 
                 Button(
                     onClick = { viewModel.onRegister() },
-                    enabled = !uiState.isLoading && allFieldsValid,
-                    modifier = if (uiState.isLoading) Modifier else Modifier.fillMaxWidth()
+                    enabled = enableButton
                 ) {
                     if (uiState.isLoading) {
                         CircularProgressIndicator()
                     } else {
-                        Text(text = stringResource(id = R.string.register_button))
+                        Text(
+                            text = stringResource(id = R.string.register_button),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth(0.9f)
+                        )
                     }
                 }
 

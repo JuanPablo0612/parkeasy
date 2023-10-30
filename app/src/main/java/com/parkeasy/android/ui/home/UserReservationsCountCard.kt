@@ -13,6 +13,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.parkeasy.android.R
 
+/**
+ * Composable function that displays a card showing the count of user reservations.
+ *
+ * @param count The number of user reservations to display.
+ */
 @Composable
 fun UserReservationsCountCard(count: Int) {
     OutlinedCard {

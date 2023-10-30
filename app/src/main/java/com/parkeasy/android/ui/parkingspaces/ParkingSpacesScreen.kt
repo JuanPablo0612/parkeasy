@@ -42,6 +42,13 @@ import androidx.navigation.NavController
 import com.parkeasy.android.R
 import com.parkeasy.android.ui.navigation.Screen
 
+/**
+ * Composable function that displays the screen for managing parking spaces.
+ *
+ * @param viewModel The view model for the parking spaces screen.
+ * @param navController The navigation controller for navigating between screens.
+ * @param parkingLotId The ID of the parking lot.
+ */
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun ParkingSpacesScreen(
@@ -49,9 +56,11 @@ fun ParkingSpacesScreen(
     navController: NavController,
     parkingLotId: String
 ) {
+    // Retrieve the UI state from the view model
     val uiState = viewModel.uiState
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
+    // Initialize the view model when the screen is launched
     LaunchedEffect(key1 = true) {
         viewModel.init(parkingLotId)
     }
@@ -67,114 +76,125 @@ fun ParkingSpacesScreen(
         },
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
     ) { padding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-        ) {
-            if (uiState.isLoadingData) {
-                Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                    CircularProgressIndicator()
-                }
-            } else {
-                Text(text = uiState.parkingLot.name, fontSize = 24.sp, fontWeight = FontWeight.Bold)
+        Box(modifier = Modifier.padding(padding)) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(10.dp)
+            ) {
+                if (uiState.isLoadingData) {
+                    // Show a loading indicator if data is being loaded
+                    Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                        CircularProgressIndicator()
+                    }
+                } else {
+                    // Display the parking lot name and number of parking spaces
+                    Text(
+                        text = uiState.parkingLot.name,
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold
+                    )
 
-                Spacer(modifier = Modifier.height(5.dp))
+                    Spacer(modifier = Modifier.height(5.dp))
 
-                Text(
-                    text = stringResource(
-                        id = R.string.parking_spaces_number,
-                        uiState.parkingSpaces.count()
-                    ),
-                    fontSize = 16.sp
-                )
+                    Text(
+                        text = stringResource(
+                            id = R.string.parking_spaces_number,
+                            uiState.parkingSpaces.count()
+                        ),
+                        fontSize = 16.sp
+                    )
 
-                Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
 
-                LazyColumn(modifier = Modifier.weight(1f)) {
-                    item {
-                        FlowRow(
-                            verticalArrangement = Arrangement.spacedBy(10.dp),
-                            horizontalArrangement = Arrangement.spacedBy(
-                                space = 10.dp,
-                                alignment = Alignment.CenterHorizontally
-                            )
-                        ) {
-                            uiState.parkingSpaces.forEach { parkingSpace ->
-                                val reservedByCurrentUser =
-                                    uiState.userReservations.any { it.parkingSpaceId == parkingSpace.id }
+                    LazyColumn(modifier = Modifier.weight(1f)) {
+                        item {
+                            FlowRow(
+                                verticalArrangement = Arrangement.spacedBy(10.dp),
+                                horizontalArrangement = Arrangement.spacedBy(
+                                    space = 10.dp,
+                                    alignment = Alignment.CenterHorizontally
+                                )
+                            ) {
+                                // Display each parking space as a button or outlined button
+                                uiState.parkingSpaces.forEach { parkingSpace ->
+                                    val reservedByCurrentUser =
+                                        uiState.userReservations.any { it.parkingSpaceId == parkingSpace.id }
 
-                                if (uiState.selectedParkingSpace == parkingSpace) {
-                                    Button(
-                                        onClick = {
-                                            viewModel.onSelectedParkingSpaceChanged(
-                                                parkingSpace
-                                            )
-                                        },
-                                        colors = if (reservedByCurrentUser) ButtonDefaults.buttonColors(
-                                            containerColor = Color.Green
-                                        ) else ButtonDefaults.buttonColors(),
-                                        shape = CircleShape
-                                    ) {
-                                        Text(text = parkingSpace.number.toString())
-                                    }
-                                } else {
-                                    val border = if (reservedByCurrentUser) BorderStroke(
-                                        width = 1.dp,
-                                        color = Color.Green
-                                    ) else ButtonDefaults.outlinedButtonBorder
+                                    if (uiState.selectedParkingSpace == parkingSpace) {
+                                        Button(
+                                            onClick = {
+                                                viewModel.onSelectedParkingSpaceChanged(
+                                                    parkingSpace
+                                                )
+                                            },
+                                            colors = if (reservedByCurrentUser) ButtonDefaults.buttonColors(
+                                                containerColor = Color.Green
+                                            ) else ButtonDefaults.buttonColors(),
+                                            shape = CircleShape
+                                        ) {
+                                            Text(text = parkingSpace.number.toString())
+                                        }
+                                    } else {
+                                        val border = if (reservedByCurrentUser) BorderStroke(
+                                            width = 1.dp,
+                                            color = Color.Green
+                                        ) else ButtonDefaults.outlinedButtonBorder
 
-                                    OutlinedButton(
-                                        onClick = {
-                                            viewModel.onSelectedParkingSpaceChanged(parkingSpace)
-                                        },
-                                        border = border,
-                                        shape = CircleShape
-                                    ) {
-                                        Text(text = parkingSpace.number.toString())
+                                        OutlinedButton(
+                                            onClick = {
+                                                viewModel.onSelectedParkingSpaceChanged(parkingSpace)
+                                            },
+                                            border = border,
+                                            shape = CircleShape
+                                        ) {
+                                            Text(text = parkingSpace.number.toString())
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
 
-                Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
 
-                if (uiState.selectedParkingSpace != null && uiState.userReservations.any { it.parkingSpaceId == uiState.selectedParkingSpace.id }) {
-                    Row(modifier = Modifier.fillMaxWidth()) {
-                        Button(onClick = {}, modifier = Modifier.weight(1f)) {
-                            Text(text = stringResource(id = R.string.parking_spaces_reserve_edit_button))
-                        }
+                    if (uiState.selectedParkingSpace != null && uiState.userReservations.any { it.parkingSpaceId == uiState.selectedParkingSpace.id }) {
+                        // Display buttons for editing or canceling a reservation
+                        Row(modifier = Modifier.fillMaxWidth()) {
+                            Button(onClick = {}, modifier = Modifier.weight(1f)) {
+                                Text(text = stringResource(id = R.string.parking_spaces_reserve_edit_button))
+                            }
 
-                        Spacer(modifier = Modifier.width(10.dp))
-
-                        Button(
-                            onClick = { viewModel.onCancelReservationClick() },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            Text(text = stringResource(id = R.string.parking_spaces_reserve_cancel_button))
-                        }
-                    }
-                } else {
-                    Row(modifier = Modifier.fillMaxWidth()) {
-                        Button(
-                            onClick = { navController.navigate("${Screen.Reservation.route}/${uiState.parkingLot.id}/${uiState.selectedParkingSpace!!.id}") },
-                            enabled = uiState.selectedParkingSpace != null && !uiState.isReserveLoading,
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            Text(text = stringResource(id = R.string.parking_spaces_reserve_button))
-                        }
-
-                        if (uiState.currentUser.admin) {
                             Spacer(modifier = Modifier.width(10.dp))
 
-                            TextButton(
-                                onClick = { viewModel.onShowAddParkingSpacesDialogChanged() },
+                            Button(
+                                onClick = { viewModel.onCancelReservationClick() },
+                                colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
                                 modifier = Modifier.weight(1f)
                             ) {
-                                Text(text = "Add")
+                                Text(text = stringResource(id = R.string.parking_spaces_reserve_cancel_button))
+                            }
+                        }
+                    } else {
+                        // Display buttons for reserving a parking space or adding new parking spaces
+                        Row(modifier = Modifier.fillMaxWidth()) {
+                            Button(
+                                onClick = { navController.navigate("${Screen.Reservation.route}/${uiState.parkingLot.id}/${uiState.selectedParkingSpace!!.id}") },
+                                enabled = uiState.selectedParkingSpace != null && !uiState.isReserveLoading,
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Text(text = stringResource(id = R.string.parking_spaces_reserve_button))
+                            }
+
+                            if (uiState.currentUser.admin) {
+                                Spacer(modifier = Modifier.width(10.dp))
+
+                                TextButton(
+                                    onClick = { viewModel.onShowAddParkingSpacesDialogChanged() },
+                                    modifier = Modifier.weight(1f)
+                                ) {
+                                    Text(text = "Add")
+                                }
                             }
                         }
                     }
@@ -184,6 +204,7 @@ fun ParkingSpacesScreen(
     }
 
     if (uiState.showAddParkingSpacesDialog) {
+        // Display a dialog for adding new parking spaces
         AlertDialog(
             onDismissRequest = { viewModel.onShowAddParkingSpacesDialogChanged() },
             title = {

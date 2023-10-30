@@ -7,6 +7,11 @@ import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
 import com.google.maps.android.compose.MapUiSettings
 
+/**
+ * A composable function that displays a Google Map with specified properties and UI settings.
+ *
+ * @param modifier The modifier to be applied to the map.
+ */
 @Composable
 fun Map(modifier: Modifier) {
     GoogleMap(

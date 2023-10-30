@@ -14,6 +14,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.parkeasy.android.R
 
+/**
+ * Composable function that displays a permissions request UI.
+ *
+ * @param onClick callback function to be invoked when the "Conceder permisos" button is clicked
+ */
 @Composable
 fun PermissionsRequest(onClick: () -> Unit) {
     Column(

@@ -34,6 +34,37 @@ import com.parkeasy.android.R
 import com.parkeasy.android.ui.common.AutoSizeText
 import com.parkeasy.android.ui.map.Map
 
+/**
+ * This method is a Composable function called `ParkingLotsMapScreen` that displays
+ * a screen with a parking lots map. It takes two parameters: `viewModel`, which
+ * is an instance of `ParkingLotsMapViewModel`, and `onSettingsClick`, which is a
+ * lambda function that is called when the settings button is clicked.
+ *
+ * The function starts by getting the UI state from the `viewModel`. It also
+ * initializes a `scrollBehavior` variable with a
+ * `TopAppBarDefaults.exitUntilCollapsedScrollBehavior()` value.
+ *
+ * Inside the `Scaffold` composable, the `topBar` parameter is set to a
+ * `LargeTopAppBar` composable. It consists of a `Box` that contains a `Column`
+ * with the user's name and email. The visibility and size of the `Column` are
+ * controlled by the `scrollBehavior` state. Below the `Column`, there is a `Row`
+ * with an icon and a text that displays the title of the screen. The visibility
+ * and size of the `Row` are also controlled by the `scrollBehavior` state.
+ *
+ * The `actions` parameter of the `Scaffold` composable contains an `IconButton`
+ * with a settings icon. The `scrollBehavior` is passed as the `scrollBehavior`
+ * parameter, and the height of the `Scaffold` is set to be between 50dp and
+ * 200dp.
+ *
+ * Inside the `Scaffold` composable, there is a `Column` composable that contains a
+ * `Map` composable. The `modifier` of the `Column` is set to fill the maximum
+ * size and apply padding.
+ *
+ * The `ParkingLotsMapScreen` function is annotated with
+ * `@OptIn(ExperimentalMaterial3Api::class)`, indicating that it uses experimental
+ * Material 3 APIs. It is also annotated with `@Composable`, indicating that it is
+ * a composable function.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ParkingLotsMapScreen(

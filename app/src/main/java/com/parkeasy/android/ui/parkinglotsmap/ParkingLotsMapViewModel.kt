@@ -11,8 +11,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * ParkingLotsMapViewModel class.
+ */
 @HiltViewModel
-class ParkingLotsMapViewModel @Inject constructor(private val getCurrentUserUseCase: GetCurrentUserUseCase) : ViewModel() {
+class ParkingLotsMapViewModel @Inject constructor(private val getCurrentUserUseCase: GetCurrentUserUseCase) :
+    ViewModel() {
     var uiState by mutableStateOf(ParkingsMapUiState())
         private set
 
@@ -20,6 +24,15 @@ class ParkingLotsMapViewModel @Inject constructor(private val getCurrentUserUseC
         getCurrentUser()
     }
 
+    /**
+     * Retrieves the current user asynchronously and updates the UI state with the obtained user.
+     * This method is called within the [viewModelScope] to ensure the coroutine is cancelled when the ViewModel is cleared.
+     * The obtained user is collected using the [getCurrentUserUseCase] and stored in the [uiState] property of the ViewModel.
+     *
+     * @see viewModelScope
+     * @see getCurrentUserUseCase
+     * @see uiState
+     */
     private fun getCurrentUser() {
         viewModelScope.launch {
             getCurrentUserUseCase().collect { user ->
@@ -29,6 +42,9 @@ class ParkingLotsMapViewModel @Inject constructor(private val getCurrentUserUseC
     }
 }
 
+/**
+ * ParkingsMapUiState class.
+ */
 data class ParkingsMapUiState(
     val currentUser: User = User()
 )

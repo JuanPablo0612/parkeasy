@@ -39,22 +39,33 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
+/**
+ * Composable function that sets up the Parkeasy theme for the app.
+ *
+ * @param darkTheme Whether to use the dark theme. Defaults to the system's dark theme setting.
+ * @param dynamicColor Whether to use dynamic colors. Available on Android 12+.
+ * @param content The content to be displayed within the theme.
+ */
 @Composable
-fun ParkingReservationTheme(
+fun ParkeasyTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
+    // Determine the color scheme based on the dark theme and dynamic color settings
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context).copy(background = Color.Black) else dynamicLightColorScheme(context)
+            if (darkTheme) dynamicDarkColorScheme(context).copy(background = Color.Black) else dynamicLightColorScheme(
+                context
+            )
         }
 
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
+
+    // Set the status bar color and appearance
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
@@ -64,6 +75,7 @@ fun ParkingReservationTheme(
         }
     }
 
+    // Apply the Parkeasy theme using MaterialTheme
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,

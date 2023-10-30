@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.parkeasy.android" />
+                  <option name="mobileSdkAppId" value="1:135418762533:android:332d14286b074037d576cc" />
+                  <option name="projectId" value="parkeasy-d6323" />
+                  <option name="projectNumber" value="135418762533" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

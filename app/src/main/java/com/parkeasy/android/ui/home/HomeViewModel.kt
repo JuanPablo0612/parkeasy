@@ -13,6 +13,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * HomeViewModel class.
+ */
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
@@ -25,6 +28,13 @@ class HomeViewModel @Inject constructor(
         getUserReservations()
     }
 
+    /**
+     * Retrieves the reservations made by the current user.
+     *
+     * This method is responsible for fetching the reservations made by the current user. It uses coroutines to perform the asynchronous operations.
+     *
+     * @return Unit
+     */
     private fun getUserReservations() {
         viewModelScope.launch {
             getCurrentUserUseCase().collect { user ->
@@ -36,6 +46,9 @@ class HomeViewModel @Inject constructor(
     }
 }
 
+/**
+ * HomeUiState class.
+ */
 data class HomeUiState(
     val currentUser: User = User(),
     val reservations: List<Reservation> = emptyList(),

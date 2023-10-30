@@ -21,6 +21,9 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * ParkingSpacesViewModel class.
+ */
 @HiltViewModel
 class ParkingSpacesViewModel @Inject constructor(
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
@@ -33,6 +36,11 @@ class ParkingSpacesViewModel @Inject constructor(
     var uiState by mutableStateOf(ParkingSpacesUiState())
         private set
 
+    /**
+     * Initializes the parking spaces view model with the provided parking lot ID.
+     *
+     * @param parkingLotId The ID of the parking lot to retrieve data for.
+     */
     fun init(parkingLotId: String) {
         viewModelScope.launch {
             delay(300)
@@ -57,19 +65,49 @@ class ParkingSpacesViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Updates the selected parking space in the UI state.
+     *
+     * @param parkingSpace The new selected parking space.
+     */
     fun onSelectedParkingSpaceChanged(parkingSpace: ParkingSpace) {
-        val selectedParkingSpace = if (parkingSpace == uiState.selectedParkingSpace) null else parkingSpace
+        val selectedParkingSpace =
+            if (parkingSpace == uiState.selectedParkingSpace) null else parkingSpace
         uiState = uiState.copy(selectedParkingSpace = selectedParkingSpace)
     }
 
+    /**
+     * Toggles the visibility of the "Add Parking Spaces" dialog in the UI.
+     *
+     * This method updates the [uiState] property of the [ParkingSpacesViewModel] class by setting the value of
+     * [showAddParkingSpacesDialog] to its opposite value.
+     *
+     * @see ParkingSpacesViewModel.uiState
+     * @see ParkingSpacesViewModel.showAddParkingSpacesDialog
+     */
     fun onShowAddParkingSpacesDialogChanged() {
         uiState = uiState.copy(showAddParkingSpacesDialog = !uiState.showAddParkingSpacesDialog)
     }
 
+    /**
+     * Updates the UI state when the number of parking spaces is changed.
+     *
+     * @param number The new number of parking spaces as a String.
+     */
     fun onParkingSpacesNumberChanged(number: String) {
         uiState = uiState.copy(parkingSpacesNumber = number)
     }
 
+    /**
+     * Function to handle the click event when adding parking spaces.
+     * This function is executed in a coroutine scope.
+     *
+     * It retrieves the initial count of parking spaces from the UI state and adds 1 to it.
+     * Then, it calculates the final count by adding the parsed integer value of the parkingSpacesNumber from the UI state to the initial count minus 1.
+     *
+     * It iterates through the range of numbers from initialCount to finalCount and calls the addParkingSpaceUseCase function for each number,
+     * passing the parking lot ID from the UI state and the current number as arguments.
+     */
     fun onAddParkingSpacesClick() {
         viewModelScope.launch {
             val initialCount = uiState.parkingSpaces.count() + 1
@@ -81,6 +119,17 @@ class ParkingSpacesViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Executes the cancellation of a reservation when the cancel reservation button is clicked.
+     * This method is called within the [viewModelScope] coroutine scope.
+     * It launches a coroutine to delete the reservation associated with the selected parking space.
+     *
+     * @throws [NullPointerException] if [uiState.selectedParkingSpace] is null.
+     *
+     * @see [deleteReservationUseCase]
+     * @see [viewModelScope]
+     * @see [uiState.selectedParkingSpace]
+     */
     fun onCancelReservationClick() {
         viewModelScope.launch {
             deleteReservationUseCase(uiState.selectedParkingSpace!!.id)
@@ -88,6 +137,9 @@ class ParkingSpacesViewModel @Inject constructor(
     }
 }
 
+/**
+ * ParkingSpacesUiState class.
+ */
 data class ParkingSpacesUiState(
     val currentUser: User = User(),
     val parkingLot: ParkingLot = ParkingLot(),

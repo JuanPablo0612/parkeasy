@@ -19,6 +19,12 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
+/**
+ * Composable function that represents the home screen of the application.
+ *
+ * @param viewModel The view model for the home screen.
+ * @param onSettingsClick Callback function to handle the settings button click.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(

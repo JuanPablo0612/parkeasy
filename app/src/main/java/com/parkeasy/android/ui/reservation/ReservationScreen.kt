@@ -45,6 +45,14 @@ import androidx.navigation.NavController
 import com.parkeasy.android.R
 import com.parkeasy.android.ui.common.AutoSizeText
 
+/**
+ * Composable function that displays the reservation screen.
+ *
+ * @param viewModel The view model for the reservation screen.
+ * @param navController The navigation controller for navigating between screens.
+ * @param parkingLotId The ID of the parking lot.
+ * @param parkingSpaceId The ID of the parking space.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReservationScreen(
@@ -53,17 +61,24 @@ fun ReservationScreen(
     parkingLotId: String,
     parkingSpaceId: String
 ) {
+    // Retrieve the UI state from the view model
     val uiState = viewModel.uiState
+
+    // Define the scroll behavior for the top app bar
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+
+    // Remember the state of the date and time pickers
     val startDatePickerState = rememberDatePickerState(initialDisplayMode = DisplayMode.Input)
     val endDatePickerState = rememberDatePickerState(initialDisplayMode = DisplayMode.Input)
     val startTimePickerState = rememberTimePickerState()
     val endTimePickerState = rememberTimePickerState()
 
+    // Initialize the view model with the parking lot and space IDs
     LaunchedEffect(true) {
         viewModel.init(parkingLotId, parkingSpaceId)
     }
 
+    // Navigate back when the reservation is successful
     LaunchedEffect(uiState.isReserveSuccess) {
         uiState.isReserveSuccess?.let {
             if (it) {
@@ -72,6 +87,7 @@ fun ReservationScreen(
         }
     }
 
+    // Display the reservation screen
     Scaffold(
         topBar = {
             LargeTopAppBar(
@@ -112,6 +128,7 @@ fun ReservationScreen(
                         .padding(10.dp)
                         .verticalScroll(rememberScrollState())
                 ) {
+                    // Display the user who made the reservation
                     Text(
                         text = stringResource(id = R.string.reservation_made_by_user_text),
                         fontSize = 16.sp,
@@ -135,6 +152,7 @@ fun ReservationScreen(
 
                     Spacer(modifier = Modifier.height(20.dp))
 
+                    // Display the start and end dates
                     Text(
                         text = stringResource(id = R.string.reservation_start_date),
                         fontSize = 16.sp
@@ -159,6 +177,7 @@ fun ReservationScreen(
 
                     Spacer(modifier = Modifier.height(20.dp))
 
+                    // Display the start and end times
                     Text(
                         text = stringResource(id = R.string.reservation_start_time),
                         fontSize = 16.sp
@@ -187,8 +206,11 @@ fun ReservationScreen(
 
                     Spacer(modifier = Modifier.height(20.dp))
 
+                    // Display the check availability button
                     val enableButton =
-                        startDatePickerState.selectedDateMillis != null && endDatePickerState.selectedDateMillis != null && !uiState.isCheckingAvailability
+                        startDatePickerState.selectedDateMillis != null &&
+                                endDatePickerState.selectedDateMillis != null &&
+                                !uiState.isCheckingAvailability
 
                     Button(
                         onClick = {
@@ -215,6 +237,7 @@ fun ReservationScreen(
         }
     }
 
+    // Display the confirm reservation dialog
     if (uiState.showReserveDialog) {
         ConfirmReservationDialog(
             parkingLotName = uiState.parkingLot.name,
@@ -228,6 +251,7 @@ fun ReservationScreen(
         )
     }
 
+    // Display the error message dialog
     uiState.errorMessageId?.let {
         AlertDialog(
             onDismissRequest = {},

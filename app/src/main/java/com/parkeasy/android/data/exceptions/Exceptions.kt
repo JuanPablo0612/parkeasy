@@ -5,6 +5,11 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.parkeasy.android.R
 
+/**
+ * Returns the message ID associated with the exception.
+ *
+ * @return The resource ID of the error message.
+ */
 fun Exception.getMessageId() = when (this) {
     is FirebaseAuthInvalidUserException -> R.string.error_user_does_not_exist
     is FirebaseAuthInvalidCredentialsException -> R.string.error_wrong_password

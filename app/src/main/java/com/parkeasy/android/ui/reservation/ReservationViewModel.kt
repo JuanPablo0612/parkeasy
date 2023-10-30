@@ -24,6 +24,9 @@ import java.util.Locale
 import java.util.TimeZone
 import javax.inject.Inject
 
+/**
+ * ReservationViewModel class.
+ */
 @HiltViewModel
 class ReservationViewModel @Inject constructor(
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
@@ -35,6 +38,12 @@ class ReservationViewModel @Inject constructor(
     var uiState by mutableStateOf(ReservationUiState())
         private set
 
+    /**
+     * Initializes the reservation view model with the provided parking lot and parking space IDs.
+     *
+     * @param parkingLotId The ID of the parking lot to retrieve.
+     * @param parkingSpaceId The ID of the parking space to retrieve.
+     */
     fun init(parkingLotId: String, parkingSpaceId: String) {
         viewModelScope.launch {
             combine(
@@ -53,6 +62,12 @@ class ReservationViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Resets the reservation results in the UI state.
+     * This method sets the showReserveDialog, isReserveSuccess, and errorMessageId properties in the UI state to their initial values.
+     * After calling this method, the showReserveDialog property will be set to false, isReserveSuccess property will be set to null,
+     * and errorMessageId property will be set to null.
+     */
     fun resetReservationResults() {
         uiState = uiState.copy(
             showReserveDialog = false,
@@ -61,6 +76,16 @@ class ReservationViewModel @Inject constructor(
         )
     }
 
+    /**
+     * Performs the necessary actions when the "Check Availability" button is clicked.
+     *
+     * @param startDateMillis The start date in milliseconds.
+     * @param endDateMillis The end date in milliseconds.
+     * @param startHour The start hour.
+     * @param startMinute The start minute.
+     * @param endHour The end hour.
+     * @param endMinute The end minute.
+     */
     fun onCheckAvailabilityClick(
         startDateMillis: Long,
         endDateMillis: Long,
@@ -73,8 +98,10 @@ class ReservationViewModel @Inject constructor(
             uiState = uiState.copy(isCheckingAvailability = true)
 
             val timeZoneOffset = TimeZone.getDefault().getOffset(startDateMillis)
-            val startDate = Date((startDateMillis + (startHour * 3600 + startMinute * 60) * 1000) - timeZoneOffset)
-            val endDate = Date((endDateMillis + (endHour * 3600 + endMinute * 60) * 1000) - timeZoneOffset)
+            val startDate =
+                Date((startDateMillis + (startHour * 3600 + startMinute * 60) * 1000) - timeZoneOffset)
+            val endDate =
+                Date((endDateMillis + (endHour * 3600 + endMinute * 60) * 1000) - timeZoneOffset)
 
             val startTimestamp = Timestamp(startDate)
             val endTimestamp = Timestamp(endDate)
@@ -106,6 +133,17 @@ class ReservationViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Executes the reserve click action.
+     *
+     * This method is responsible for handling the reserve button click event. It updates the UI state to hide the reserve dialog and show the progress indicator.
+     *
+     * It then tries to add a reservation using the provided user ID, parking lot ID, parking space ID, start timestamp, and end timestamp. If the reservation is added successfully, it updates the UI state to indicate a successful reservation.
+     *
+     * If an exception occurs during the reservation process, it updates the UI state with the corresponding error message.
+     *
+     * Finally, it updates the UI state to indicate that the reservation process is complete.
+     */
     fun onReserveClick() {
         viewModelScope.launch {
             uiState = uiState.copy(showReserveDialog = false, isReserving = true)
@@ -129,6 +167,9 @@ class ReservationViewModel @Inject constructor(
     }
 }
 
+/**
+ * ReservationUiState class.
+ */
 data class ReservationUiState(
     val currentUser: User = User(),
     val parkingLot: ParkingLot = ParkingLot(),

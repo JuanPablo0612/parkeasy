@@ -1,5 +1,6 @@
 package com.parkeasy.android.ui.account
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -36,6 +37,12 @@ import androidx.navigation.NavController
 import com.parkeasy.android.R
 import com.parkeasy.android.ui.navigation.Screen
 
+/**
+ * Composable function that represents the account screen.
+ *
+ * @param viewModel The view model for the account screen.
+ * @param navController The navigation controller for navigating between screens.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AccountScreen(viewModel: AccountViewModel = hiltViewModel(), navController: NavController) {
@@ -53,78 +60,84 @@ fun AccountScreen(viewModel: AccountViewModel = hiltViewModel(), navController: 
         },
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
     ) { padding ->
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .verticalScroll(state = rememberScrollState())
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(imageVector = Icons.Default.Person, contentDescription = null)
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(10.dp)
+                    .verticalScroll(state = rememberScrollState())
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(imageVector = Icons.Default.Person, contentDescription = null)
 
-                Spacer(modifier = Modifier.width(10.dp))
+                    Spacer(modifier = Modifier.width(10.dp))
+
+                    Text(
+                        text = "${uiState.currentUser.firstName} ${uiState.currentUser.lastName}",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
 
                 Text(
-                    text = "${uiState.currentUser.firstName} ${uiState.currentUser.lastName}",
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
+                    text = stringResource(
+                        id = R.string.account_residence_country,
+                        uiState.currentUser.residenceCountry
+                    ),
+                    fontSize = 18.sp
+                )
+
+                Spacer(modifier = Modifier.height(30.dp))
+
+                Button(
+                    onClick = {
+                        viewModel.onShowLogoutDialogChanged()
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.error
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = stringResource(id = R.string.account_logout))
+                }
+            }
+
+            if (uiState.showLogoutDialog) {
+                AlertDialog(
+                    onDismissRequest = { viewModel.onShowLogoutDialogChanged() },
+                    title = { Text(text = stringResource(id = R.string.account_logout)) },
+                    text = { Text(text = stringResource(id = R.string.account_logout_text)) },
+                    confirmButton = {
+                        Button(
+                            onClick = {
+                                navController.navigate(Screen.Welcome.route) {
+                                    popUpTo(navController.graph.startDestinationId) {
+                                        inclusive = true
+                                    }
+                                }
+
+                                viewModel.onLogout()
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.error
+                            )
+                        ) {
+                            Text(text = stringResource(id = R.string.common_confirm))
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { viewModel.onShowLogoutDialogChanged() }) {
+                            Text(text = stringResource(id = R.string.common_cancel))
+                        }
+                    }
                 )
             }
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Text(
-                text = stringResource(
-                    id = R.string.account_residence_country,
-                    uiState.currentUser.residenceCountry
-                ),
-                fontSize = 18.sp
-            )
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-            Button(
-                onClick = {
-                    viewModel.onShowLogoutDialogChanged()
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.error
-                ),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(text = stringResource(id = R.string.account_logout))
-            }
-        }
-
-        if (uiState.showLogoutDialog) {
-            AlertDialog(
-                onDismissRequest = { viewModel.onShowLogoutDialogChanged() },
-                title = { Text(text = stringResource(id = R.string.account_logout)) },
-                text = { Text(text = stringResource(id = R.string.account_logout_text)) },
-                confirmButton = {
-                    Button(
-                        onClick = {
-                            navController.navigate(Screen.Welcome.route) {
-                                popUpTo(navController.graph.startDestinationId) {
-                                    inclusive = true
-                                }
-                            }
-
-                            viewModel.onLogout()
-                        },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.error
-                        )
-                    ) {
-                        Text(text = stringResource(id = R.string.common_confirm))
-                    }
-                },
-                dismissButton = {
-                    TextButton(onClick = { viewModel.onShowLogoutDialogChanged() }) {
-                        Text(text = stringResource(id = R.string.common_cancel))
-                    }
-                }
-            )
         }
     }
 }

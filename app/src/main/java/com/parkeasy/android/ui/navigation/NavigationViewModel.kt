@@ -10,6 +10,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * NavigationViewModel class.
+ */
 @HiltViewModel
 class NavigationViewModel @Inject constructor(private val getCurrentUserIdUseCase: GetCurrentUserIdUseCase) :
     ViewModel() {
@@ -20,6 +23,13 @@ class NavigationViewModel @Inject constructor(private val getCurrentUserIdUseCas
         getCurrentUserId()
     }
 
+    /**
+     * Retrieves the current user ID asynchronously and updates the UI state accordingly.
+     *
+     * This method launches a coroutine in the [viewModelScope] to execute the [getCurrentUserIdUseCase].
+     * The retrieved user ID is then used to update the [uiState] by setting the [isLoggedIn] flag to `true`
+     * if the user ID is not empty, and the [isLoading] flag to `false`.
+     */
     private fun getCurrentUserId() {
         viewModelScope.launch {
             val currentUserId = getCurrentUserIdUseCase()
@@ -28,6 +38,9 @@ class NavigationViewModel @Inject constructor(private val getCurrentUserIdUseCas
     }
 }
 
+/**
+ * NavigationUiState class.
+ */
 data class NavigationUiState(
     val isLoggedIn: Boolean = false,
     val isLoading: Boolean = true

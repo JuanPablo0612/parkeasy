@@ -18,6 +18,13 @@ import com.parkeasy.android.R
 import com.parkeasy.android.domain.model.parkinglots.ParkingLot
 import com.parkeasy.android.domain.model.parkingspaces.ParkingSpace
 
+/**
+ * Composable function that displays a card for a parking lot.
+ *
+ * @param parkingLot The parking lot object to display.
+ * @param parkingSpaces The list of parking spaces in the parking lot.
+ * @param onClick The callback function to be invoked when the reserve button is clicked.
+ */
 @Composable
 fun ParkingLotCard(parkingLot: ParkingLot, parkingSpaces: List<ParkingSpace>, onClick: () -> Unit) {
     OutlinedCard(modifier = Modifier.fillMaxWidth()) {

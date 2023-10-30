@@ -12,6 +12,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * AccountViewModel class.
+ */
 @HiltViewModel
 class AccountViewModel @Inject constructor(
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
@@ -24,6 +27,12 @@ class AccountViewModel @Inject constructor(
         getCurrentUser()
     }
 
+    /**
+     * Retrieves the current user asynchronously and updates the UI state with the obtained user.
+     * This method is called within the AccountViewModel class.
+     *
+     * @return Unit
+     */
     private fun getCurrentUser() {
         viewModelScope.launch {
             getCurrentUserUseCase().collect { user ->
@@ -32,10 +41,22 @@ class AccountViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Toggles the visibility of the logout dialog in the UI.
+     *
+     * This method updates the [uiState] property of the [AccountViewModel] class by toggling the value of [showLogoutDialog].
+     * If [showLogoutDialog] is currently true, it will be set to false, and vice versa.
+     */
     fun onShowLogoutDialogChanged() {
         uiState = uiState.copy(showLogoutDialog = !uiState.showLogoutDialog)
     }
 
+    /**
+     * Executes the logout process asynchronously.
+     *
+     * This method launches a coroutine in the viewModelScope to execute the logoutUseCase, which handles the logout process.
+     * After the logout process is completed, the onShowLogoutDialogChanged method is called to show the logout dialog.
+     */
     fun onLogout() {
         viewModelScope.launch {
             logoutUseCase()
@@ -44,6 +65,9 @@ class AccountViewModel @Inject constructor(
     }
 }
 
+/**
+ * AccountUiState class.
+ */
 data class AccountUiState(
     val currentUser: User = User(),
     val showLogoutDialog: Boolean = false

@@ -14,6 +14,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 
+/**
+ * Composable function that displays a text with auto-sizing capability.
+ *
+ * @param text The text to be displayed.
+ * @param modifier The modifier to be applied to the text.
+ * @param maxLines The maximum number of lines to be displayed.
+ * @param style The style to be applied to the text.
+ * @param minFontSize The minimum font size allowed for the text.
+ * @param maxFontSize The maximum font size allowed for the text.
+ */
 @Composable
 fun AutoSizeText(
     text: String,

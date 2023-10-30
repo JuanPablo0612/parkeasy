@@ -31,6 +31,11 @@ import com.parkeasy.android.ui.account.AccountScreen
 import com.parkeasy.android.ui.home.HomeScreen
 import com.parkeasy.android.ui.parkinglotslist.ParkingLotsScreen
 
+/**
+ * Composable function that represents the main screen of the app.
+ *
+ * @param navController The NavController used for navigating between screens.
+ */
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun MainScreen(navController: NavController) {
@@ -136,6 +141,9 @@ fun MainScreen(navController: NavController) {
     }
 }
 
+/**
+ * TabItem class.
+ */
 sealed class TabItem(val index: Int, val titleId: Int, val icon: ImageVector) {
     object Home : TabItem(0, R.string.main_tab_home, Icons.Default.Home)
     object List : TabItem(1, R.string.main_tab_list, Icons.Default.List)

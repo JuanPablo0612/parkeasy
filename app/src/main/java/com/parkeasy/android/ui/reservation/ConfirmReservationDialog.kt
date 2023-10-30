@@ -20,6 +20,16 @@ import androidx.compose.ui.unit.sp
 import com.parkeasy.android.R
 import com.parkeasy.android.ui.common.AutoSizeText
 
+/**
+ * Composable function that displays a confirmation dialog for a reservation.
+ *
+ * @param parkingLotName The name of the parking lot.
+ * @param parkingSpaceNumber The number of the parking space.
+ * @param startText The start date of the reservation.
+ * @param endText The end date of the reservation.
+ * @param onConfirm Callback function to be called when the reservation is confirmed.
+ * @param onDismiss Callback function to be called when the dialog is dismissed.
+ */
 @Composable
 fun ConfirmReservationDialog(
     parkingLotName: String,

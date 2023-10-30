@@ -1,13 +1,11 @@
 package com.parkeasy.android.ui.login
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -23,7 +20,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Password
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.AlertDialog
@@ -44,7 +40,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalFocusManager
@@ -61,13 +56,21 @@ import androidx.navigation.NavController
 import com.parkeasy.android.R
 import com.parkeasy.android.ui.navigation.Screen
 
+/**
+ * Composable function that displays the login screen UI.
+ *
+ * @param viewModel The [LoginViewModel] used to handle login logic and manage UI state.
+ * @param navController The [NavController] used for navigation within the app.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(), navController: NavController) {
+    // Retrieve the UI state from the view model
     val uiState = viewModel.uiState
     val focusManager = LocalFocusManager.current
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
+    // Navigate to the main screen if login is successful
     LaunchedEffect(key1 = uiState.isSuccess) {
         if (uiState.isSuccess != null && uiState.isSuccess) {
             navController.navigate(Screen.Main.route) {
@@ -90,9 +93,7 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(), navController: NavC
                 scrollBehavior = scrollBehavior,
             )
         },
-        modifier = Modifier
-            .padding(horizontal = 10.dp)
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
     ) { padding ->
         Box(
             modifier = Modifier
@@ -102,10 +103,11 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(), navController: NavC
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-                    .fillMaxWidth(0.9f)
-                    .fillMaxHeight()
+                    .fillMaxWidth()
+                    .padding(10.dp)
                     .verticalScroll(rememberScrollState())
             ) {
+                // Display login subtitle
                 Text(
                     text = stringResource(id = R.string.login_subtitle),
                     style = MaterialTheme.typography.bodyMedium,
@@ -114,6 +116,7 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(), navController: NavC
 
                 Spacer(modifier = Modifier.height(20.dp))
 
+                // Display email input field
                 OutlinedTextField(
                     value = uiState.email,
                     onValueChange = { viewModel.onEmailTextChanged(it) },
@@ -138,11 +141,12 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(), navController: NavC
                     keyboardActions = KeyboardActions(onNext = {
                         focusManager.moveFocus(FocusDirection.Next)
                     }),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(0.9f)
                 )
 
                 Spacer(modifier = Modifier.height(5.dp))
 
+                // Display password input field
                 OutlinedTextField(
                     value = uiState.password,
                     onValueChange = { viewModel.onPasswordTextChanged(it) },
@@ -176,11 +180,12 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(), navController: NavC
                     keyboardActions = KeyboardActions(onNext = {
                         focusManager.clearFocus()
                     }),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(0.9f)
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
 
+                // Display login button
                 val enableButton = uiState.isValidEmail && uiState.isValidPassword
 
                 Button(
@@ -193,13 +198,14 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(), navController: NavC
                         Text(
                             text = stringResource(id = R.string.login_button),
                             textAlign = TextAlign.Center,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(0.9f)
                         )
                     }
                 }
 
                 Spacer(modifier = Modifier.height(5.dp))
 
+                // Display register option
                 TextButton(
                     onClick = {
                         if (navController.previousBackStackEntry!!.destination.route == Screen.Register.route) {
@@ -214,6 +220,7 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(), navController: NavC
 
                 Spacer(modifier = Modifier.height(10.dp))
 
+                // Display social login option
                 Text(
                     text = stringResource(R.string.login_social_option),
                     style = MaterialTheme.typography.titleLarge
@@ -221,7 +228,8 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(), navController: NavC
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                OutlinedCard(modifier = Modifier.fillMaxWidth(0.7f)) {
+                // Display Google login option
+                OutlinedCard(modifier = Modifier.fillMaxWidth(0.6f)) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center,
@@ -247,6 +255,7 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(), navController: NavC
         }
     }
 
+    // Display error dialog if login fails
     if (uiState.errorMessageId != null) {
         AlertDialog(
             onDismissRequest = { viewModel.resetLoginResult() },

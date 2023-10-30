@@ -26,15 +26,26 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.parkeasy.android.R
 import com.parkeasy.android.ui.navigation.Screen
 
+/**
+ * Composable function that displays the welcome screen of the app.
+ *
+ * @param navController The navigation controller used for navigating to other screens.
+ */
 @Composable
 fun WelcomeScreen(navController: NavController) {
+    // Load the Lottie animation composition from the raw resource file
     val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.welcome_animation))
+
+    // Animate the Lottie composition indefinitely
     val progress by animateLottieCompositionAsState(
         composition = composition,
         iterations = LottieConstants.IterateForever
     )
 
-    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(15.dp)) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.padding(15.dp)
+    ) {
         Spacer(modifier = Modifier.height(20.dp))
 
         Text(

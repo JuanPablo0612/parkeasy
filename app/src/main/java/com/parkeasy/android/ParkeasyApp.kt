@@ -3,5 +3,8 @@ package com.parkeasy.android
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
+/**
+ * Parkeasy class.
+ */
 @HiltAndroidApp
-class Parkeasy : Application()
+class ParkeasyApp : Application()

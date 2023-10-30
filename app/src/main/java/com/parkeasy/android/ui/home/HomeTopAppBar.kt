@@ -30,6 +30,15 @@ import androidx.compose.ui.unit.dp
 import com.parkeasy.android.R
 import com.parkeasy.android.ui.common.AutoSizeText
 
+/**
+ * Composable function that displays the top app bar for the home screen.
+ *
+ * @param firstName The first name of the user.
+ * @param lastName The last name of the user.
+ * @param email The email of the user.
+ * @param scrollBehavior The scroll behavior of the top app bar.
+ * @param onSettingsClick The callback function for when the settings icon is clicked.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeTopAppBar(

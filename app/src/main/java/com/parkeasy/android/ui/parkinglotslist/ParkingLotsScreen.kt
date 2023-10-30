@@ -1,6 +1,7 @@
 package com.parkeasy.android.ui.parkinglotslist
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,9 +22,18 @@ import com.parkeasy.android.R
 import com.parkeasy.android.ui.common.AutoSizeText
 import com.parkeasy.android.ui.navigation.Screen
 
+/**
+ * Composable function that displays the screen for viewing parking lots.
+ *
+ * @param viewModel The view model for managing the parking lots screen.
+ * @param navController The navigation controller for navigating to other screens.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ParkingLotsScreen(viewModel: ParkingLotsViewModel = hiltViewModel(), navController: NavController) {
+fun ParkingLotsScreen(
+    viewModel: ParkingLotsViewModel = hiltViewModel(),
+    navController: NavController
+) {
     val uiState = viewModel.uiState
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
@@ -41,18 +51,22 @@ fun ParkingLotsScreen(viewModel: ParkingLotsViewModel = hiltViewModel(), navCont
         },
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
     ) { padding ->
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-        ) {
-            items(uiState.parkingLots, key = { it.id }) { parkingLot ->
-                ParkingLotCard(
-                    parkingLot = parkingLot,
-                    parkingSpaces = uiState.parkingSpaces.filter { it.parkingLotId == parkingLot.id },
-                    onClick = { navController.navigate("${Screen.ParkingSpaces.route}/${parkingLot.id}") }
-                )
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .padding(padding)) {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(10.dp)
+            ) {
+                items(uiState.parkingLots, key = { it.id }) { parkingLot ->
+                    ParkingLotCard(
+                        parkingLot = parkingLot,
+                        parkingSpaces = uiState.parkingSpaces.filter { it.parkingLotId == parkingLot.id },
+                        onClick = { navController.navigate("${Screen.ParkingSpaces.route}/${parkingLot.id}") }
+                    )
+                }
             }
         }
     }

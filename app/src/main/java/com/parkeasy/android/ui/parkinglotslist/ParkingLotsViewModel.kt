@@ -13,6 +13,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * ParkingLotsViewModel class.
+ */
 @HiltViewModel
 class ParkingLotsViewModel @Inject constructor(
     private val getAllParkingLotsUseCase: GetAllParkingLotsUseCase,
@@ -26,6 +29,17 @@ class ParkingLotsViewModel @Inject constructor(
         getAllParkingSpaces()
     }
 
+    /**
+     * Retrieves all parking lots and updates the UI state with the sorted list of parking lots.
+     *
+     * This method is a coroutine function that runs in the viewModelScope. It launches a new coroutine
+     * to execute the [getAllParkingLotsUseCase] and collects the emitted parking lots. The collected
+     * parking lots are then sorted by their names and assigned to the [uiState] property of the
+     * ViewModel.
+     *
+     * @see getAllParkingLotsUseCase
+     * @see uiState
+     */
     private fun getAllParkingLots() {
         viewModelScope.launch {
             getAllParkingLotsUseCase().collect { parkingLots ->
@@ -34,6 +48,18 @@ class ParkingLotsViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Retrieves all parking spaces and updates the UI state with the collected data.
+     *
+     * This method is a coroutine function that runs in the [viewModelScope]. It launches a new coroutine
+     * to execute the [getAllParkingSpacesUseCase] and collects the emitted parking spaces. The collected
+     * parking spaces are then assigned to the [uiState] property by creating a new copy of the [uiState]
+     * object with the updated parking spaces.
+     *
+     * @see viewModelScope
+     * @see getAllParkingSpacesUseCase
+     * @see uiState
+     */
     private fun getAllParkingSpaces() {
         viewModelScope.launch {
             getAllParkingSpacesUseCase().collect { parkingSpaces ->
@@ -43,6 +69,9 @@ class ParkingLotsViewModel @Inject constructor(
     }
 }
 
+/**
+ * ParkingLotsUiState class.
+ */
 data class ParkingLotsUiState(
     val parkingLots: List<ParkingLot> = emptyList(),
     val parkingSpaces: List<ParkingSpace> = emptyList()
