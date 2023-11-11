@@ -1,7 +1,7 @@
 package com.parkeasy.android.data.parkingspaces.remote
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.dataObjects
+import com.google.firebase.firestore.dataObjects
 import com.parkeasy.android.data.parkingspaces.model.ParkingSpaceModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await

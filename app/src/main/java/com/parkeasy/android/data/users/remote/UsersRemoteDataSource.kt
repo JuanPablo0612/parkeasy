@@ -2,7 +2,7 @@ package com.parkeasy.android.data.users.remote
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.firestore.ktx.dataObjects
+import com.google.firebase.firestore.dataObjects
 import com.parkeasy.android.data.users.model.UserModel
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
